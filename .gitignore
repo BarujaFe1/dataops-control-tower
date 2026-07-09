@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.turbo/
+.npm-cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+!apps/api/.env.example
+!apps/web/.env.example
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Runtime / local DB
+*.db
+*.sqlite3
+data/processed/*
+!data/processed/.gitkeep
+apps/api/control_tower.db
+
+# Logs
+*.log
+
+# Vercel / deploy caches
+.vercel/
