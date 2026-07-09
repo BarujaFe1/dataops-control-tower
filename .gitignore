@@ -54,3 +54,7 @@ apps/api/control_tower.db
 
 # Vercel / deploy caches
 .vercel/
+apps/web/.vercel/
+apps/web/.env.local
+apps/web/node_modules/
+apps/web/.next/

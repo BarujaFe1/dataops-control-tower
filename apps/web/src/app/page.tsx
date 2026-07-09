@@ -1,7 +1,9 @@
-import { fetchTower } from "@/lib/api";
+import { fetchTower, USE_API } from "@/lib/api";
 import { FALLBACK_TOWER } from "@/lib/fallback";
+import { FreshnessPanel } from "@/components/FreshnessPanel";
 import { IncidentTimeline } from "@/components/IncidentTimeline";
 import { QualityMatrix } from "@/components/QualityMatrix";
+import { SchemaDriftPanel } from "@/components/SchemaDriftPanel";
 import { SlaCards } from "@/components/SlaCards";
 
 async function loadTower() {
@@ -14,10 +16,20 @@ async function loadTower() {
 
 export default async function HomePage() {
   const tower = await loadTower();
+  const isLab = !USE_API || Boolean(tower.metadata?.lab);
 
   return (
     <main className="grid-glow min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {isLab && (
+          <div className="mb-6 rounded-xl border border-tower-warn/40 bg-tower-warn/10 px-4 py-3 text-sm text-tower-warn">
+            <strong className="font-semibold">Lab / portfolio demo</strong>
+            {" — "}
+            synthetic sources and simulated incidents. Not connected to a real warehouse, scheduler
+            or production alerting stack.
+          </div>
+        )}
+
         <header className="mb-10 flex flex-col gap-6 border-b border-tower-line pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.28em] text-tower-accent">
@@ -52,6 +64,11 @@ export default async function HomePage() {
               <p className="mt-2 font-display text-3xl font-semibold">{value}</p>
             </div>
           ))}
+        </section>
+
+        <section className="mb-10 grid gap-4 lg:grid-cols-2">
+          <FreshnessPanel scorecards={tower.scorecards} runs={tower.recent_runs} />
+          <SchemaDriftPanel runs={tower.recent_runs} />
         </section>
 
         <section className="mb-10">

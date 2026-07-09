@@ -7,6 +7,7 @@
   <p><strong>Data reliability monitoring for recurring datasets: quality, freshness, schema, SLA and incidents.</strong></p>
 
   <p>
+    <a href="https://dataops-control-tower.vercel.app"><strong>Live Demo</strong></a> •
     <a href="#1-visão-geral--overview">PT-BR / English Overview</a> •
     <a href="#-product-preview">Preview</a> •
     <a href="#-screenshots">Screenshots</a> •
@@ -17,12 +18,13 @@
   </p>
 
   <p>
+    <a href="https://dataops-control-tower.vercel.app"><img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel" /></a>
     <img alt="Next.js" src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs" />
     <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-React-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
     <img alt="Python" src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" />
     <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
     <img alt="Pandas" src="https://img.shields.io/badge/Pandas-Quality%20Checks-150458?style=for-the-badge&logo=pandas&logoColor=white" />
-    <img alt="Data Observability" src="https://img.shields.io/badge/Data%20Observability-Reliability-22C55E?style=for-the-badge" />
+    <img alt="Lab Demo" src="https://img.shields.io/badge/Lab%20Demo-Synthetic%20Data-22C55E?style=for-the-badge" />
   </p>
 </div>
 
@@ -30,18 +32,20 @@
   <img src="./assets/hero-cover.png" alt="DataOps Control Tower product overview" width="100%" />
 </p>
 
+<p align="center"><strong>Live Demo:</strong> <a href="https://dataops-control-tower.vercel.app">https://dataops-control-tower.vercel.app</a></p>
+
 ---
 
 ## 1. Visão Geral / Overview
 
-O **DataOps Control Tower** é um produto de dados criado para monitorar datasets recorrentes como se fossem sistemas vivos: qualidade, frescor, schema, volume, duplicatas, anomalias, SLA de atualização, drift e incidentes.
+O **DataOps Control Tower** é um **lab / portfolio demo** de observabilidade de dados: monitora datasets recorrentes sintéticos como se fossem sistemas vivos (qualidade, frescor, schema, volume, duplicatas, SLA e incidentes).
 
-Ele automatiza um fluxo de **cadastro de fontes demo (CSV/API/Sheets), execução de checks, score temporal de confiabilidade, registro de incidentes, alertas simulados, dashboard operacional e briefing executivo**. Em vez de descobrir quebra de base só depois que o dashboard já mentiu, o Control Tower transforma confiabilidade em um painel contínuo e acionável.
+A demo pública na Vercel roda o frontend Next.js com **snapshot sintético embutido** (freshness, schema drift, quality matrix, incidents). O backend FastAPI local continua disponível para desenvolvimento, mas **não é produção real** — não há warehouse cloud, orquestração enterprise nem alertas conectados a sistemas vivos.
 
-O projeto foi desenvolvido por **Felipe Alirio Baruja** como peça de portfólio, complementando o DataFlow: enquanto o DataFlow diagnostica uma base pontual, este projeto monitora a confiabilidade ao longo do tempo.
+O projeto foi desenvolvido por **Felipe Alirio Baruja** como peça de portfólio, complementando o DataFlow: enquanto o DataFlow diagnostica uma base pontual, este projeto demonstra confiabilidade ao longo do tempo.
 
-> **Product Scope Notice**  
-> O MVP usa **3 conectores demo** (CSV, API mock e Sheets mock). Não é warehouse cloud obrigatório, streaming pesado nem plataforma enterprise completa.
+> **Lab / Demo Notice**  
+> Escopo honesto: **3 conectores demo** (CSV, API mock, Sheets mock), dados sintéticos e incidentes simulados. Não inventa produção. Não substitui Monte Carlo, Great Expectations Cloud ou um stack DataOps enterprise.
 
 ---
 
@@ -290,21 +294,35 @@ Dashboard + executive briefing
 
 ## 🚀 Quick Start / Início Rápido
 
-### Pré-requisitos
+### Live Demo (recomendado)
+Abra a demo pública (frontend estático com snapshot sintético):
+
+**https://dataops-control-tower.vercel.app**
+
+Banner na UI deixa explícito: *Lab / portfolio demo — synthetic sources*.
+
+### Pré-requisitos (local)
 - **Node.js** v20 ou superior
-- **Python** v3.10+ (preferencialmente 3.12)
+- **Python** v3.10+ (preferencialmente 3.12) — só se for subir a API
 - **Git**
 
-### Opção 1 — Execução integrada no Windows
+### Opção 1 — Só o frontend lab (igual à Vercel)
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+*Frontend em [http://localhost:3000](http://localhost:3000) com dados sintéticos embutidos.*
+
+### Opção 2 — Execução integrada no Windows (API + Web)
 Na pasta raiz do projeto:
 ```bash
 start.bat
 ```
-O script cria o venv, instala dependências, sobe FastAPI (`8000`) e Next.js (`3000`).
+O script cria o venv, instala dependências, sobe FastAPI (`8000`) e Next.js (`3000`).  
+Para o frontend consumir a API local: `NEXT_PUBLIC_USE_API=true`.
 
-### Opção 2 — Execução manual
-
-#### 1. Backend FastAPI (`apps/api`)
+### Opção 3 — Backend FastAPI manual (`apps/api`)
 ```bash
 cd apps/api
 python -m venv .venv
@@ -314,14 +332,6 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 *API em [http://127.0.0.1:8000](http://127.0.0.1:8000). Docs em `/docs`.*
-
-#### 2. Frontend Next.js (`apps/web`)
-```bash
-cd apps/web
-npm install
-npm run dev
-```
-*Frontend em [http://localhost:3000](http://localhost:3000).*
 
 ---
 

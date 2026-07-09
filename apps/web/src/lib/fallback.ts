@@ -1,15 +1,20 @@
 import type { ControlTowerSnapshot } from "@/types";
 
-/** Offline fallback so the UI remains demoable without the API running. */
+/** Synthetic lab snapshot — demo only, not production monitoring. */
 export const FALLBACK_TOWER: ControlTowerSnapshot = {
   generated_at: "2026-07-09T16:00:00+00:00",
   overall_reliability: 74.5,
   sources_monitored: 3,
   open_incidents: 3,
-  failing_slas: 1,
+  failing_slas: 2,
   executive_summary:
-    "Control Tower monitors 3 demo sources with overall reliability 74.5/100. 3 incidents remain open and 1 SLA breach requires attention before executive reporting windows.",
-  metadata: { connectors: ["csv", "api", "sheets"], demo_mode: true },
+    "Lab demo: Control Tower monitors 3 synthetic sources with overall reliability 74.5/100. Support freshness SLA is breached, Marketing shows schema drift (missing `leads`), and Orders remains healthy with a soft null-rate watch.",
+  metadata: {
+    connectors: ["csv", "api", "sheets"],
+    demo_mode: true,
+    lab: true,
+    notice: "Synthetic demo dataset — not connected to a real warehouse.",
+  },
   scorecards: [
     {
       source_id: "src_orders_daily",
@@ -62,11 +67,91 @@ export const FALLBACK_TOWER: ControlTowerSnapshot = {
       column_count: 7,
       freshness_hours: 2,
       quality_score: 92,
-      checks: [],
-      schema_fingerprint: "abc123",
+      checks: [
+        {
+          check_id: "freshness_sla",
+          name: "Freshness within SLA",
+          passed: true,
+          severity: "info",
+          observed: 2,
+          threshold: 12,
+          message: "Dataset is 2.0h old against SLA of 12h.",
+        },
+        {
+          check_id: "null_rate",
+          name: "Null rate under threshold",
+          passed: true,
+          severity: "info",
+          observed: 0.08,
+          threshold: 0.15,
+          message: "Overall null rate is 8.0%.",
+        },
+      ],
+      schema_fingerprint: "a1b2c3d4e5f60718",
       volume_delta_pct: 8.7,
       duplicate_rate: 0,
       null_rate: 0.08,
+    },
+    {
+      run_id: "run_support_latest",
+      source_id: "src_support_api",
+      started_at: "2026-07-09T08:00:00+00:00",
+      finished_at: "2026-07-09T08:02:00+00:00",
+      status: "degraded",
+      row_count: 80,
+      column_count: 6,
+      freshness_hours: 8,
+      quality_score: 60,
+      checks: [
+        {
+          check_id: "freshness_sla",
+          name: "Freshness within SLA",
+          passed: false,
+          severity: "critical",
+          observed: 8,
+          threshold: 6,
+          message: "Dataset is 8.0h old against SLA of 6h.",
+        },
+      ],
+      schema_fingerprint: "f0e1d2c3b4a59687",
+      volume_delta_pct: -4.8,
+      duplicate_rate: 0.012,
+      null_rate: 0.03,
+    },
+    {
+      run_id: "run_marketing_latest",
+      source_id: "src_marketing_sheets",
+      started_at: "2026-07-08T10:00:00+00:00",
+      finished_at: "2026-07-08T10:02:00+00:00",
+      status: "degraded",
+      row_count: 30,
+      column_count: 5,
+      freshness_hours: 30,
+      quality_score: 71.5,
+      checks: [
+        {
+          check_id: "schema_columns",
+          name: "Schema columns present",
+          passed: false,
+          severity: "critical",
+          observed: "leads",
+          threshold: "all expected columns",
+          message: "Missing columns: ['leads']",
+        },
+        {
+          check_id: "freshness_sla",
+          name: "Freshness within SLA",
+          passed: false,
+          severity: "critical",
+          observed: 30,
+          threshold: 24,
+          message: "Dataset is 30.0h old against SLA of 24h.",
+        },
+      ],
+      schema_fingerprint: "9988776655443322",
+      volume_delta_pct: 0,
+      duplicate_rate: 0,
+      null_rate: 0.02,
     },
   ],
   incidents: [
@@ -91,7 +176,7 @@ export const FALLBACK_TOWER: ControlTowerSnapshot = {
       status: "open",
       opened_at: "2026-07-08T11:00:00+00:00",
       summary:
-        "Marketing sheet fingerprint changed. Contract expects `leads`; observed schema diverged in demo seed.",
+        "Marketing sheet fingerprint changed. Contract expects `leads`; observed schema diverged in the synthetic seed.",
       recommended_action:
         "Confirm sheet header rename with Growth owner and update data contract.",
       related_run_id: "run_marketing_latest",
