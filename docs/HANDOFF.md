@@ -106,4 +106,4 @@ chore: improve portfolio quality, docs, tests and stability
 - [x] README strong + honest
 - [x] Docs AUDIT / ARCHITECTURE / HANDOFF
 - [x] UX reviewed
-- [ ] Branch published (push after commit)
+- [x] Branch published (`origin/chore/portfolio-quality-pass`)
