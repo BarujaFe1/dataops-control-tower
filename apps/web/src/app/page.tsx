@@ -1,32 +1,47 @@
 import { fetchTower, USE_API } from "@/lib/api";
 import { FALLBACK_TOWER } from "@/lib/fallback";
+import type { ControlTowerSnapshot } from "@/types";
 import { FreshnessPanel } from "@/components/FreshnessPanel";
 import { IncidentTimeline } from "@/components/IncidentTimeline";
 import { QualityMatrix } from "@/components/QualityMatrix";
 import { SchemaDriftPanel } from "@/components/SchemaDriftPanel";
 import { SlaCards } from "@/components/SlaCards";
+import Link from "next/link";
 
-async function loadTower() {
+type LoadMode = "lab" | "api" | "api-fallback";
+
+async function loadTower(): Promise<{ tower: ControlTowerSnapshot; mode: LoadMode }> {
+  if (!USE_API) {
+    return { tower: FALLBACK_TOWER, mode: "lab" };
+  }
   try {
-    return await fetchTower();
+    return { tower: await fetchTower(), mode: "api" };
   } catch {
-    return FALLBACK_TOWER;
+    return { tower: FALLBACK_TOWER, mode: "api-fallback" };
   }
 }
 
 export default async function HomePage() {
-  const tower = await loadTower();
-  const isLab = !USE_API || Boolean(tower.metadata?.lab);
+  const { tower, mode } = await loadTower();
 
   return (
     <main className="grid-glow min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {isLab && (
-          <div className="mb-6 rounded-xl border border-tower-warn/40 bg-tower-warn/10 px-4 py-3 text-sm text-tower-warn">
-            <strong className="font-semibold">Lab / portfolio demo</strong>
+        {(mode === "lab" || mode === "api-fallback") && (
+          <div
+            className="mb-6 rounded-xl border border-tower-warn/40 bg-tower-warn/10 px-4 py-3 text-sm text-tower-warn"
+            role="note"
+          >
+            <strong className="font-semibold">
+              {mode === "api-fallback" ? "API unavailable — showing lab snapshot" : "Lab / portfolio demo"}
+            </strong>
             {" — "}
             synthetic sources and simulated incidents. Not connected to a real warehouse, scheduler
-            or production alerting stack.
+            or production alerting stack.{" "}
+            <Link href="/methodology" className="underline underline-offset-4 hover:text-tower-accent">
+              Read the methodology
+            </Link>
+            .
           </div>
         )}
 
@@ -43,7 +58,7 @@ export default async function HomePage() {
               volume, duplicates, SLA and incidents — before dashboards break.
             </p>
           </div>
-          <div className="panel px-5 py-4 text-right">
+          <div className="panel px-5 py-4 text-right" aria-live="polite">
             <p className="text-xs uppercase tracking-[0.18em] text-tower-muted">Overall reliability</p>
             <p className="font-display text-5xl font-semibold text-tower-accent">
               {tower.overall_reliability}
@@ -52,10 +67,10 @@ export default async function HomePage() {
           </div>
         </header>
 
-        <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Key metrics">
           {[
             ["Sources", tower.sources_monitored],
-            ["Open incidents", tower.open_incidents],
+            ["Active incidents", tower.open_incidents],
             ["SLA breaches", tower.failing_slas],
             ["Recent runs", tower.recent_runs.length],
           ].map(([label, value]) => (
@@ -75,7 +90,9 @@ export default async function HomePage() {
           <div className="mb-4 flex items-end justify-between gap-4">
             <div>
               <h2 className="font-display text-2xl font-semibold">SLA scorecards</h2>
-              <p className="text-sm text-tower-muted">Freshness windows, reliability trend and open risk.</p>
+              <p className="text-sm text-tower-muted">
+                Freshness windows, reliability trend and open risk.
+              </p>
             </div>
           </div>
           <SlaCards scorecards={tower.scorecards} />
@@ -103,9 +120,11 @@ export default async function HomePage() {
             <div className="mt-5 space-y-2 text-sm">
               <p className="text-tower-muted">Demo connectors</p>
               <p className="font-medium">CSV · API mock · Sheets mock</p>
-              <p className="text-tower-muted">Generated at</p>
+              <p className="text-tower-muted">Snapshot generated at</p>
               <p className="font-medium">
-                {new Date(tower.generated_at).toLocaleString("pt-BR")}
+                <time dateTime={tower.generated_at}>
+                  {new Date(tower.generated_at).toLocaleString("en-GB", { timeZone: "UTC" })} UTC
+                </time>
               </p>
             </div>
           </aside>
@@ -113,35 +132,56 @@ export default async function HomePage() {
 
         <section className="panel p-5">
           <h2 className="font-display text-xl font-semibold">Run replay</h2>
-          <p className="mt-1 text-sm text-tower-muted">Latest monitored executions with score and drift signals.</p>
-          <div className="mt-4 overflow-x-auto">
-            <table className="min-w-full text-left text-sm">
-              <thead className="text-tower-muted">
-                <tr>
-                  <th className="py-2 pr-4">Run</th>
-                  <th className="py-2 pr-4">Source</th>
-                  <th className="py-2 pr-4">Score</th>
-                  <th className="py-2 pr-4">Rows</th>
-                  <th className="py-2 pr-4">Freshness</th>
-                  <th className="py-2 pr-4">Volume Δ</th>
-                  <th className="py-2">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tower.recent_runs.map((run) => (
-                  <tr key={run.run_id} className="border-t border-tower-line/70">
-                    <td className="py-2 pr-4 font-mono text-xs">{run.run_id}</td>
-                    <td className="py-2 pr-4">{run.source_id}</td>
-                    <td className="py-2 pr-4">{run.quality_score}</td>
-                    <td className="py-2 pr-4">{run.row_count}</td>
-                    <td className="py-2 pr-4">{run.freshness_hours}h</td>
-                    <td className="py-2 pr-4">{run.volume_delta_pct}%</td>
-                    <td className="py-2 capitalize">{run.status}</td>
+          <p className="mt-1 text-sm text-tower-muted">
+            Latest monitored executions with score and drift signals.
+          </p>
+          {tower.recent_runs.length === 0 ? (
+            <p className="mt-4 text-sm text-tower-muted">No runs in this snapshot.</p>
+          ) : (
+            <div className="mt-4 overflow-x-auto">
+              <table className="min-w-full text-left text-sm">
+                <caption className="sr-only">Recent quality runs</caption>
+                <thead className="text-tower-muted">
+                  <tr>
+                    <th scope="col" className="py-2 pr-4">
+                      Run
+                    </th>
+                    <th scope="col" className="py-2 pr-4">
+                      Source
+                    </th>
+                    <th scope="col" className="py-2 pr-4">
+                      Score
+                    </th>
+                    <th scope="col" className="py-2 pr-4">
+                      Rows
+                    </th>
+                    <th scope="col" className="py-2 pr-4">
+                      Freshness
+                    </th>
+                    <th scope="col" className="py-2 pr-4">
+                      Volume Δ
+                    </th>
+                    <th scope="col" className="py-2">
+                      Status
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {tower.recent_runs.map((run) => (
+                    <tr key={run.run_id} className="border-t border-tower-line/70">
+                      <td className="py-2 pr-4 font-mono text-xs">{run.run_id}</td>
+                      <td className="py-2 pr-4">{run.source_id}</td>
+                      <td className="py-2 pr-4">{run.quality_score}</td>
+                      <td className="py-2 pr-4">{run.row_count}</td>
+                      <td className="py-2 pr-4">{run.freshness_hours}h</td>
+                      <td className="py-2 pr-4">{run.volume_delta_pct}%</td>
+                      <td className="py-2 capitalize">{run.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
       </div>
     </main>

@@ -26,8 +26,18 @@ from app.services.quality import (
     schema_fingerprint,
 )
 
-SEED_DIR = Path(__file__).resolve().parents[4] / "data" / "seed"
 NOW = datetime(2026, 7, 9, 16, 0, tzinfo=timezone.utc)
+
+
+def _repo_root() -> Path:
+    here = Path(__file__).resolve()
+    for parent in here.parents:
+        if (parent / "data" / "seed").is_dir():
+            return parent
+    raise FileNotFoundError("Could not locate repository root containing data/seed")
+
+
+SEED_DIR = _repo_root() / "data" / "seed"
 
 
 def _sources() -> list[DataSource]:
@@ -68,7 +78,7 @@ def _sources() -> list[DataSource]:
 def _load_seed(name: str) -> pd.DataFrame:
     path = SEED_DIR / name
     if not path.exists():
-        return pd.DataFrame()
+        raise FileNotFoundError(f"Missing demo seed CSV: {path}")
     return pd.read_csv(path)
 
 
@@ -188,12 +198,15 @@ def build_demo_snapshot() -> ControlTowerSnapshot:
         Incident(
             id="inc_003",
             source_id="src_orders_daily",
-            title="Elevated null rate on shipping_city",
+            title="Watch — shipping_city nulls (column-level)",
             severity=Severity.medium,
             status=IncidentStatus.mitigated,
             opened_at=NOW - timedelta(days=2),
             closed_at=None,
-            summary="Null rate crossed soft threshold on a non-critical dimension. Score still healthy.",
+            summary=(
+                "Column-level watch on shipping_city nulls. Overall dataset null rate remains under "
+                "the 15% threshold, so the reliability score stays healthy; this is a soft watch, not a hard fail."
+            ),
             recommended_action="Backfill city from ZIP when available; keep monitoring for 3 runs.",
             related_run_id="run_orders_latest",
         ),
@@ -246,9 +259,10 @@ def build_demo_snapshot() -> ControlTowerSnapshot:
     failing_slas = sum(1 for s in scorecards if s.freshness_status == "breach")
 
     executive = (
-        f"Control Tower monitors {len(sources)} demo sources with overall reliability "
-        f"{overall}/100. {open_incidents} incidents remain open and {failing_slas} SLA "
-        f"breach(es) require attention before executive reporting windows."
+        "Lab demo: Control Tower monitors "
+        f"{len(sources)} synthetic sources with overall reliability "
+        f"{overall}/100. {open_incidents} active incidents (including mitigated watches) "
+        f"and {failing_slas} SLA breach(es) require attention before executive reporting windows."
     )
 
     return ControlTowerSnapshot(
@@ -264,7 +278,9 @@ def build_demo_snapshot() -> ControlTowerSnapshot:
         metadata={
             "connectors": ["csv", "api", "sheets"],
             "demo_mode": True,
+            "lab": True,
             "product": "DataOps Control Tower",
+            "notice": "Synthetic demo dataset — not connected to a real warehouse.",
         },
     )
 

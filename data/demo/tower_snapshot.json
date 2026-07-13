@@ -1,0 +1,354 @@
+{
+  "generated_at": "2026-07-09T16:00:00Z",
+  "overall_reliability": 75.0,
+  "sources_monitored": 3,
+  "open_incidents": 3,
+  "failing_slas": 2,
+  "scorecards": [
+    {
+      "source_id": "src_orders_daily",
+      "source_name": "Orders Daily Extract",
+      "reliability_score": 100.0,
+      "freshness_status": "ok",
+      "schema_status": "ok",
+      "volume_status": "ok",
+      "quality_status": "healthy",
+      "open_incidents": 1,
+      "last_run_at": "2026-07-09T14:02:00Z",
+      "sla_hours": 12,
+      "trend": [
+        88.0,
+        95.0,
+        98.0,
+        100.0
+      ]
+    },
+    {
+      "source_id": "src_support_api",
+      "source_name": "Support Tickets API",
+      "reliability_score": 75.0,
+      "freshness_status": "breach",
+      "schema_status": "ok",
+      "volume_status": "ok",
+      "quality_status": "degraded",
+      "open_incidents": 1,
+      "last_run_at": "2026-07-09T08:02:00Z",
+      "sla_hours": 6,
+      "trend": [
+        63.0,
+        70.0,
+        73.0,
+        75.0
+      ]
+    },
+    {
+      "source_id": "src_marketing_sheets",
+      "source_name": "Marketing Spend Sheet",
+      "reliability_score": 50.0,
+      "freshness_status": "breach",
+      "schema_status": "drift",
+      "volume_status": "ok",
+      "quality_status": "failing",
+      "open_incidents": 1,
+      "last_run_at": "2026-07-08T10:02:00Z",
+      "sla_hours": 24,
+      "trend": [
+        40.0,
+        45.0,
+        48.0,
+        50.0
+      ]
+    }
+  ],
+  "recent_runs": [
+    {
+      "run_id": "run_orders_latest",
+      "source_id": "src_orders_daily",
+      "started_at": "2026-07-09T14:00:00Z",
+      "finished_at": "2026-07-09T14:02:00Z",
+      "status": "healthy",
+      "row_count": 120,
+      "column_count": 7,
+      "freshness_hours": 2.0,
+      "quality_score": 100.0,
+      "checks": [
+        {
+          "check_id": "schema_columns",
+          "name": "Schema columns present",
+          "passed": true,
+          "severity": "info",
+          "observed": "ok",
+          "threshold": "all expected columns",
+          "message": "All expected columns are present."
+        },
+        {
+          "check_id": "null_rate",
+          "name": "Null rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0452,
+          "threshold": 0.15,
+          "message": "Overall null rate is 4.5%."
+        },
+        {
+          "check_id": "duplicate_rate",
+          "name": "Duplicate rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": 0.05,
+          "message": "Duplicate rate is 0.0%."
+        },
+        {
+          "check_id": "freshness_sla",
+          "name": "Freshness within SLA",
+          "passed": true,
+          "severity": "info",
+          "observed": 2.0,
+          "threshold": 12,
+          "message": "Dataset is 2.0h old against SLA of 12h."
+        },
+        {
+          "check_id": "volume_drift",
+          "name": "Volume drift within band",
+          "passed": true,
+          "severity": "info",
+          "observed": 9.09,
+          "threshold": "\u00b135%",
+          "message": "Row count changed by 9.1% vs previous run."
+        }
+      ],
+      "schema_fingerprint": "31acee574729fdf7",
+      "volume_delta_pct": 9.09,
+      "duplicate_rate": 0.0,
+      "null_rate": 0.0452
+    },
+    {
+      "run_id": "run_support_latest",
+      "source_id": "src_support_api",
+      "started_at": "2026-07-09T08:00:00Z",
+      "finished_at": "2026-07-09T08:02:00Z",
+      "status": "degraded",
+      "row_count": 80,
+      "column_count": 6,
+      "freshness_hours": 8.0,
+      "quality_score": 75.0,
+      "checks": [
+        {
+          "check_id": "schema_columns",
+          "name": "Schema columns present",
+          "passed": true,
+          "severity": "info",
+          "observed": "ok",
+          "threshold": "all expected columns",
+          "message": "All expected columns are present."
+        },
+        {
+          "check_id": "null_rate",
+          "name": "Null rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": 0.15,
+          "message": "Overall null rate is 0.0%."
+        },
+        {
+          "check_id": "duplicate_rate",
+          "name": "Duplicate rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": 0.05,
+          "message": "Duplicate rate is 0.0%."
+        },
+        {
+          "check_id": "freshness_sla",
+          "name": "Freshness within SLA",
+          "passed": false,
+          "severity": "critical",
+          "observed": 8.0,
+          "threshold": 6,
+          "message": "Dataset is 8.0h old against SLA of 6h."
+        },
+        {
+          "check_id": "volume_drift",
+          "name": "Volume drift within band",
+          "passed": true,
+          "severity": "info",
+          "observed": -4.76,
+          "threshold": "\u00b135%",
+          "message": "Row count changed by -4.8% vs previous run."
+        }
+      ],
+      "schema_fingerprint": "1a6e205e65851077",
+      "volume_delta_pct": -4.76,
+      "duplicate_rate": 0.0,
+      "null_rate": 0.0
+    },
+    {
+      "run_id": "run_orders_prev",
+      "source_id": "src_orders_daily",
+      "started_at": "2026-07-08T14:00:00Z",
+      "finished_at": "2026-07-08T14:02:00Z",
+      "status": "degraded",
+      "row_count": 110,
+      "column_count": 7,
+      "freshness_hours": 26.0,
+      "quality_score": 75.0,
+      "checks": [
+        {
+          "check_id": "schema_columns",
+          "name": "Schema columns present",
+          "passed": true,
+          "severity": "info",
+          "observed": "ok",
+          "threshold": "all expected columns",
+          "message": "All expected columns are present."
+        },
+        {
+          "check_id": "null_rate",
+          "name": "Null rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0442,
+          "threshold": 0.15,
+          "message": "Overall null rate is 4.4%."
+        },
+        {
+          "check_id": "duplicate_rate",
+          "name": "Duplicate rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": 0.05,
+          "message": "Duplicate rate is 0.0%."
+        },
+        {
+          "check_id": "freshness_sla",
+          "name": "Freshness within SLA",
+          "passed": false,
+          "severity": "critical",
+          "observed": 26.0,
+          "threshold": 12,
+          "message": "Dataset is 26.0h old against SLA of 12h."
+        }
+      ],
+      "schema_fingerprint": "31acee574729fdf7",
+      "volume_delta_pct": 0.0,
+      "duplicate_rate": 0.0,
+      "null_rate": 0.0442
+    },
+    {
+      "run_id": "run_marketing_latest",
+      "source_id": "src_marketing_sheets",
+      "started_at": "2026-07-08T10:00:00Z",
+      "finished_at": "2026-07-08T10:02:00Z",
+      "status": "failing",
+      "row_count": 30,
+      "column_count": 5,
+      "freshness_hours": 30.0,
+      "quality_score": 50.0,
+      "checks": [
+        {
+          "check_id": "schema_columns",
+          "name": "Schema columns present",
+          "passed": false,
+          "severity": "critical",
+          "observed": "leads",
+          "threshold": "all expected columns",
+          "message": "Missing columns: ['leads']"
+        },
+        {
+          "check_id": "null_rate",
+          "name": "Null rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": 0.15,
+          "message": "Overall null rate is 0.0%."
+        },
+        {
+          "check_id": "duplicate_rate",
+          "name": "Duplicate rate under threshold",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": 0.05,
+          "message": "Duplicate rate is 0.0%."
+        },
+        {
+          "check_id": "freshness_sla",
+          "name": "Freshness within SLA",
+          "passed": false,
+          "severity": "critical",
+          "observed": 30.0,
+          "threshold": 24,
+          "message": "Dataset is 30.0h old against SLA of 24h."
+        },
+        {
+          "check_id": "volume_drift",
+          "name": "Volume drift within band",
+          "passed": true,
+          "severity": "info",
+          "observed": 0.0,
+          "threshold": "\u00b135%",
+          "message": "Row count changed by 0.0% vs previous run."
+        }
+      ],
+      "schema_fingerprint": "fcd3201c977efb0c",
+      "volume_delta_pct": 0.0,
+      "duplicate_rate": 0.0,
+      "null_rate": 0.0
+    }
+  ],
+  "incidents": [
+    {
+      "id": "inc_001",
+      "source_id": "src_support_api",
+      "title": "Freshness SLA breached \u2014 Support Tickets API",
+      "severity": "critical",
+      "status": "investigating",
+      "opened_at": "2026-07-09T09:00:00Z",
+      "closed_at": null,
+      "summary": "Last successful ingest is older than the 6h SLA. Downstream CX dashboards may show stale queues.",
+      "recommended_action": "Replay connector, verify API token and pagination, then re-run quality suite.",
+      "related_run_id": "run_support_latest"
+    },
+    {
+      "id": "inc_002",
+      "source_id": "src_marketing_sheets",
+      "title": "Schema drift \u2014 missing expected column `leads`",
+      "severity": "high",
+      "status": "open",
+      "opened_at": "2026-07-08T11:00:00Z",
+      "closed_at": null,
+      "summary": "Marketing sheet fingerprint changed. Contract expects `leads`; observed schema diverged in demo seed.",
+      "recommended_action": "Confirm sheet header rename with Growth owner and update data contract.",
+      "related_run_id": "run_marketing_latest"
+    },
+    {
+      "id": "inc_003",
+      "source_id": "src_orders_daily",
+      "title": "Watch \u2014 shipping_city nulls (column-level)",
+      "severity": "medium",
+      "status": "mitigated",
+      "opened_at": "2026-07-07T16:00:00Z",
+      "closed_at": null,
+      "summary": "Column-level watch on shipping_city nulls. Overall dataset null rate remains under the 15% threshold, so the reliability score stays healthy; this is a soft watch, not a hard fail.",
+      "recommended_action": "Backfill city from ZIP when available; keep monitoring for 3 runs.",
+      "related_run_id": "run_orders_latest"
+    }
+  ],
+  "executive_summary": "Lab demo: Control Tower monitors 3 synthetic sources with overall reliability 75.0/100. 3 active incidents (including mitigated watches) and 2 SLA breach(es) require attention before executive reporting windows.",
+  "metadata": {
+    "connectors": [
+      "csv",
+      "api",
+      "sheets"
+    ],
+    "demo_mode": true,
+    "lab": true,
+    "product": "DataOps Control Tower",
+    "notice": "Synthetic demo dataset \u2014 not connected to a real warehouse."
+  }
+}

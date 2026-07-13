@@ -1,0 +1,13 @@
+{
+  "name": "dataops-control-tower",
+  "private": true,
+  "description": "Data reliability control tower lab (Next.js + FastAPI)",
+  "scripts": {
+    "dev:web": "npm --prefix apps/web run dev",
+    "build:web": "npm --prefix apps/web run build",
+    "lint:web": "npm --prefix apps/web run lint",
+    "typecheck:web": "npm --prefix apps/web run typecheck",
+    "test:api": "python -m pytest apps/api/tests -q",
+    "export:snapshot": "python scripts/export_snapshot.py"
+  }
+}
