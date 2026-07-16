@@ -3,451 +3,272 @@
 
   <h1>DataOps Control Tower</h1>
 
-  <p><strong>Observabilidade de dados para datasets recorrentes: qualidade, frescor, schema, SLA e incidentes.</strong></p>
-  <p><strong>Data reliability monitoring for recurring datasets: quality, freshness, schema, SLA and incidents.</strong></p>
+  <p><strong>Torre de controle de confiabilidade de dados — qualidade, frescor, schema drift, SLA e incidentes.</strong></p>
+  <p><strong>Data reliability control tower — quality, freshness, schema drift, SLA and incidents.</strong></p>
 
   <p>
-    <a href="https://dataops-control-tower.vercel.app"><strong>Live Demo</strong></a> •
-    <a href="#1-visão-geral--overview">PT-BR / English Overview</a> •
-    <a href="#-product-preview">Preview</a> •
-    <a href="#-screenshots">Screenshots</a> •
-    <a href="#️-stack--tecnologias">Stack</a> •
-    <a href="#-arquitetura--architecture">Architecture</a> •
-    <a href="#-quick-start--início-rápido">Quick Start</a> •
-    <a href="#-autor--author">Author</a>
+    <a href="#pt-br">PT-BR</a> ·
+    <a href="#en">English</a> ·
+    <a href="#live-demo">Live Demo</a> ·
+    <a href="#stack--tecnologias">Stack</a> ·
+    <a href="#arquitetura--architecture">Architecture</a> ·
+    <a href="#quick-start--início-rápido">Quick Start</a> ·
+    <a href="#autor--author">Author</a>
   </p>
 
   <p>
-    <a href="https://dataops-control-tower.vercel.app"><img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel" /></a>
+    <a href="https://dataops-control-tower.vercel.app"><img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-dataops--control--tower.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white" /></a>
     <img alt="Next.js" src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs" />
     <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-React-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
     <img alt="Python" src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" />
     <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
-    <img alt="Pandas" src="https://img.shields.io/badge/Pandas-Quality%20Checks-150458?style=for-the-badge&logo=pandas&logoColor=white" />
-    <img alt="Lab Demo" src="https://img.shields.io/badge/Lab%20Demo-Synthetic%20Data-22C55E?style=for-the-badge" />
+    <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+    <img alt="Lab Demo" src="https://img.shields.io/badge/Status-Lab%20demo-2563EB?style=for-the-badge" />
+    <img alt="MIT" src="https://img.shields.io/badge/License-MIT-111827?style=for-the-badge" />
+  </p>
+
+  <p>
+    <a href="https://dataops-control-tower.vercel.app"><strong>Live Demo</strong></a> ·
+    <a href="https://github.com/BarujaFe1/dataops-control-tower"><strong>Repositório</strong></a> ·
+    <a href="https://barujafe.vercel.app/"><strong>Portfólio</strong></a> ·
+    <a href="https://www.linkedin.com/in/barujafe/"><strong>LinkedIn</strong></a>
   </p>
 </div>
 
 <p align="center">
-  <img src="./assets/hero-cover.png" alt="DataOps Control Tower product overview" width="100%" />
+  <img src="./assets/hero-cover.png" alt="DataOps Control Tower overview" width="100%" />
 </p>
 
-<p align="center"><strong>Live Demo:</strong> <a href="https://dataops-control-tower.vercel.app">https://dataops-control-tower.vercel.app</a></p>
+---
+
+<a id="pt-br"></a>
+
+## PT-BR
+
+## Visão geral
+
+**DataOps Control Tower** monitora datasets recorrentes com painéis de qualidade, frescor, drift de schema, SLA e incidentes — torre de controle de confiabilidade em formato de lab.
+
+> **Aviso de lab:** demo de portfólio com dados sintéticos/amostra. Não é produto em produção com SLA, integrações reais de clientes ou garantia operacional.
 
 ---
 
-## 1. Visão Geral / Overview
+## Problema
 
-O **DataOps Control Tower** é um **lab / portfolio demo** de observabilidade de dados: monitora datasets recorrentes sintéticos como se fossem sistemas vivos (qualidade, frescor, schema, volume, duplicatas, SLA e incidentes).
-
-A demo pública na Vercel roda o frontend Next.js com **snapshot sintético embutido** (freshness, schema drift, quality matrix, incidents). O backend FastAPI local continua disponível para desenvolvimento, mas **não é produção real** — não há warehouse cloud, orquestração enterprise nem alertas conectados a sistemas vivos.
-
-O projeto foi desenvolvido por **Felipe Alirio Baruja** como peça de portfólio, complementando o DataFlow: enquanto o DataFlow diagnostica uma base pontual, este projeto demonstra confiabilidade ao longo do tempo.
-
-> **Lab / Demo Notice**  
-> Escopo honesto: **3 conectores demo** (CSV, API mock, Sheets mock), dados sintéticos e incidentes simulados. Não inventa produção. Não substitui Monte Carlo, Great Expectations Cloud ou um stack DataOps enterprise.
+Pipelines quebram em silêncio: schema muda, frescor atrasa, qualidade cai. Sem torre de controle, o negócio descobre tarde.
 
 ---
 
-## ✨ Product Preview
+## Para quem
 
-<p align="center">
-  <img src="./assets/screenshots/01-control-tower-overview.png" alt="DataOps Control Tower Overview" width="100%" />
-</p>
-
-O Control Tower apresenta uma experiência dark tipo sala de controle: reliability score, status lights, SLA cards, matriz de qualidade, timeline de incidentes e replay de execução.
+- Data engineers e analytics engineers
+- Times de plataforma de dados
+- Gestores que precisam de linguagem de SLA de dados
 
 ---
 
-## 2. Por que este projeto importa? / Why this project matters
+## Funcionalidades
 
-* **Dashboards quebram em silêncio:** Muitas equipes só descobrem que a base falhou depois que um relatório ou decisão já foi afetado.
-* **Qualidade pontual não basta:** Profiling único não cobre frescor, drift de schema e regressão de volume entre execuções.
-* **Incident response precisa de produto:** Severidade, status, ação recomendada e histórico tornam a operação de dados apresentável.
-* **Portfólio com maturidade operacional:** Fecha a lacuna entre análise exploratória e observabilidade contínua.
-
----
-
-## 🧠 O diferencial do Control Tower / What makes it different
-
-### Português
-O DataOps Control Tower não é apenas um dashboard de KPIs. Ele combina checks de qualidade, SLA de frescor, detecção de drift, score explicável e issue register em uma experiência de control room.
-
-Ele mostra não apenas o estado atual, mas também:
-- quão confiável cada fonte está ao longo do tempo;
-- quais SLAs foram violados;
-- onde houve drift de schema ou volume;
-- quais incidentes estão abertos e o que fazer a seguir;
-- como o score foi penalizado por severidade.
-
-### English
-DataOps Control Tower is not just a KPI dashboard. It combines quality checks, freshness SLAs, drift detection, an explainable score and an issue register into a control-room experience.
-
-It shows not only the current state, but also:
-- how reliable each source is over time;
-- which SLAs were breached;
-- where schema or volume drift appeared;
-- which incidents are open and what to do next;
-- how the score was penalized by severity.
+- Painéis de qualidade e frescor
+- Detecção de schema drift
+- Visão de SLA e incidentes
+- Seeds processados em data/
+- Scheduler opcional (APScheduler) na API
 
 ---
 
-## 🎯 Problema que resolve / The problem it solves
+## Escopo e limites
 
-Em fluxos reais de analytics e operações, bases recorrentes costumam falhar por:
-- atraso de atualização fora do SLA;
-- mudança silenciosa de schema;
-- queda ou explosão de volume;
-- nulos e duplicatas crescentes;
-- ausência de trilha de incidentes;
-- alertas sem priorização;
-- relatórios executivos sem contexto de confiabilidade.
-
-O **DataOps Control Tower** cria uma camada de observabilidade entre a ingestão recorrente e a decisão analítica.
+- **É:** lab de observabilidade de dados.
+- **Não é:** Great Expectations cloud, Monte Carlo clone, monitoramento enterprise multi-tenant.
 
 ---
 
-## 🧩 Proposta / Reliability Pipeline
+<a id="en"></a>
 
-```txt
-CSV / API mock / Sheets mock
-  ↓
-Scheduled / on-demand run
-  ↓
-Schema + freshness + volume + null/duplicate checks
-  ↓
-Explainable reliability score
-  ↓
-Incident register + recommended action
-  ↓
-Control Tower dashboard & executive briefing
-```
+## English
+
+## Overview
+
+**DataOps Control Tower** monitors recurring datasets with quality, freshness, schema-drift, SLA and incident panels — a data-reliability control tower as a portfolio lab.
+
+> **Lab notice:** portfolio demo with synthetic/sample data. Not a production product with SLA, real customer integrations, or operational guarantees.
 
 ---
 
-## 📸 Screenshots
+## Problem
 
-<table>
-  <tr>
-    <td width="50%">
-      <img src="./assets/screenshots/02-sla-scorecards.png" alt="SLA Scorecards" />
-      <br />
-      <sub><strong>SLA Scorecards</strong> — freshness windows, reliability trend and open risk per source.</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/screenshots/03-quality-matrix.png" alt="Quality Matrix" />
-      <br />
-      <sub><strong>Quality Matrix</strong> — status lights for freshness, schema, volume and quality.</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/screenshots/04-incident-timeline.png" alt="Incident Timeline" />
-      <br />
-      <sub><strong>Incident Timeline</strong> — severity, status, summary and recommended next action.</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/screenshots/05-run-replay.png" alt="Run Replay" />
-      <br />
-      <sub><strong>Run Replay</strong> — execution history with score, row count, freshness and volume delta.</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/screenshots/06-executive-briefing.png" alt="Executive Briefing" />
-      <br />
-      <sub><strong>Executive Briefing</strong> — concise reliability narrative for stakeholders.</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/screenshots/01-control-tower-overview.png" alt="Control Tower Overview" />
-      <br />
-      <sub><strong>Control Tower Overview</strong> — dark control-room composition with overall reliability.</sub>
-    </td>
-  </tr>
-</table>
+Pipelines fail quietly: schemas drift, freshness slips, quality drops. Without a control tower, the business finds out late.
 
 ---
 
-## 📌 Estudo de Caso / Case Study
+## Who it is for
 
-### 📌 Estudo de Caso: Três fontes recorrentes sob SLA
-O demo monitora **Orders Daily (CSV)**, **Support Tickets (API mock)** e **Marketing Spend (Sheets mock)**. O tower calcula reliability score por fonte, detecta breach de frescor no suporte, drift de schema no marketing (`leads` ausente) e mantém um issue register com ações recomendadas.
-
-### 📌 Case Study: Three recurring sources under SLA
-The demo monitors **Orders Daily (CSV)**, **Support Tickets (API mock)** and **Marketing Spend (Sheets mock)**. The tower computes per-source reliability, detects a support freshness breach, marketing schema drift (missing `leads`) and keeps an issue register with recommended actions.
+- Data and analytics engineers
+- Data platform teams
+- Managers who need data-SLA language
 
 ---
 
-## 🧭 Visual Story / Jornada Operacional
+## Features
 
-```txt
-1. Abrir o Control Tower e ler o overall reliability
-2. Identificar SLA breaches e fontes degradadas
-3. Inspecionar a Quality Matrix (freshness / schema / volume / quality)
-4. Percorrer a Incident Timeline e a próxima ação
-5. Revisar Run Replay e deltas de volume
-6. Usar o Executive Briefing para comunicar risco
-```
+- Quality and freshness panels
+- Schema-drift detection
+- SLA and incident views
+- Processed seeds under data/
+- Optional APScheduler in the API
 
 ---
 
-## ⚙️ Funcionalidades Principais / Core Features
+## Scope and limits
 
-### Control Tower Dashboard
-Painel central com reliability score, contagem de fontes, incidentes abertos e breaches de SLA.
-
-### SLA Scorecards
-Cards por fonte com janela de frescor, tendência de score e status lights.
-
-### Quality Matrix
-Matriz cruzada de freshness, schema, volume e quality para leitura rápida de risco.
-
-### Incident Timeline + Issue Register
-Linha do tempo com severidade, status, resumo e ação recomendada.
-
-### Run Replay
-Histórico de execuções com score, rows, freshness e volume delta.
-
-### Executive Briefing
-Narrativa executiva pronta para stakeholder, sem expor ruído técnico desnecessário.
+- **Is:** data-observability lab.
+- **Is not:** Great Expectations cloud, Monte Carlo clone, enterprise multi-tenant monitoring.
 
 ---
 
-## 🛠️ Stack / Tecnologias
+<a id="live-demo"></a>
 
-### Frontend
-- **Framework:** Next.js 15 (App Router) & React 19
-- **Linguagem:** TypeScript
-- **Estilização:** Tailwind CSS
-- **Componentes:** Control-room UI (SLA cards, matrix, timeline)
-- **Ícones / charts:** Lucide-ready + CSS status lights
+## Live Demo
 
-### Backend
-- **Framework API:** FastAPI & Uvicorn (Python 3.12)
-- **Modelagem:** Pydantic v2
-- **Processamento:** Pandas
-- **Checks:** schema, nulls, duplicates, freshness SLA, volume drift
-- **Suite de Testes:** Pytest
+**URL:** [https://dataops-control-tower.vercel.app](https://dataops-control-tower.vercel.app)
+
+Demo hospedada para avaliação de portfólio / Hosted for portfolio review.
+
+> Lab demo — synthetic / sample data unless noted. Not a production SLA product.
 
 ---
 
-## 🧱 Arquitetura / Architecture
+<a id="stack--tecnologias"></a>
 
-```text
+## Stack / Tecnologias
+
+| Tecnologia | Uso no projeto |
+|---|---|
+| Next.js 15 / React 19 / TypeScript / Tailwind | UI |
+| Lucide / Recharts / clsx | UI kit |
+| FastAPI / Pandas / NumPy | Checks e API |
+| APScheduler | Jobs de monitoramento (lab) |
+| Pytest | Testes |
+
+---
+
+<a id="arquitetura--architecture"></a>
+
+## Arquitetura / Architecture
+
+Monorepo pps/api + pps/web com dados seed/processed e documentação de metodologia de qualidade.
+
+`	xt
 dataops-control-tower/
 ├── apps/
-│   ├── web/                         # Frontend Next.js (App Router)
-│   │   ├── src/app/                 # Control Tower page
-│   │   ├── src/components/          # SLA, matrix, incidents
-│   │   ├── src/lib/                 # API client + fallback snapshot
-│   │   └── src/types/               # TypeScript contracts
-│   │
-│   └── api/                         # Backend FastAPI
-│       ├── app/
-│       │   ├── api/                 # REST routes (/tower, /incidents, /runs)
-│       │   ├── core/                # Settings
-│       │   ├── schemas/             # Pydantic models
-│       │   └── services/            # Quality engine + demo snapshot
-│       └── tests/                   # Pytest quality checks
-│
+│   ├── api/
+│   └── web/
+├── assets/
 ├── data/
-│   └── seed/                        # Demo CSV sources
-├── docs/                            # Portfolio + methodology
-├── assets/                          # Icon, hero, screenshots
-├── start.bat                        # Windows integrated launcher
-└── README.md
-```
+│   ├── seed/
+│   └── processed/
+├── docs/
+├── start.bat
+└── LICENSE
+`
 
 ---
 
-## 🧱 Visual Architecture
+<a id="quick-start--início-rápido"></a>
 
-<p align="center">
-  <img src="./assets/architecture-pipeline.png" alt="DataOps Control Tower visual architecture" width="100%" />
-</p>
+## Quick Start / Início rápido
 
-Sources enter scheduled validation, receive an explainable reliability score, open incidents when thresholds fail, and surface in the Control Tower UI.
+### Pré-requisitos / Requirements
 
----
+- Node.js 20+
+- Python 3.12+
+- npm
 
-## 🔁 Data Reliability Pipeline
+### Clonar / Clone
 
-```txt
-Source registration (CSV / API / Sheets mock)
-  ↓
-Run execution
-  ↓
-Schema fingerprint + expected columns
-  ↓
-Freshness vs SLA
-  ↓
-Null / duplicate / volume drift checks
-  ↓
-Severity-weighted reliability score
-  ↓
-Incident open / update
-  ↓
-Dashboard + executive briefing
-```
+`ash
+git clone https://github.com/BarujaFe1/dataops-control-tower.git
+cd dataops-control-tower
+`
 
----
+### Windows (atalho)
 
-## 🚀 Quick Start / Início Rápido
+`at
+start.bat
+`
 
-### Live Demo (recomendado)
-Abra a demo pública (frontend estático com snapshot sintético):
+Sobe API em :8000 e web em :3000.
 
-**https://dataops-control-tower.vercel.app**
+### Manual
 
-Banner na UI deixa explícito: *Lab / portfolio demo — synthetic sources*.
+`ash
+# API
+cd apps/api
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+`
 
-### Pré-requisitos (local)
-- **Node.js** v20 ou superior
-- **Python** v3.10+ (preferencialmente 3.12) — só se for subir a API
-- **Git**
-
-### Opção 1 — Só o frontend lab (igual à Vercel)
-```bash
+`ash
+# Web (outro terminal)
 cd apps/web
 npm install
 npm run dev
-```
-*Frontend em [http://localhost:3000](http://localhost:3000) com dados sintéticos embutidos.*
+`
 
-### Opção 2 — Execução integrada no Windows (API + Web)
-Na pasta raiz do projeto:
-```bash
-start.bat
-```
-O script cria o venv, instala dependências, sobe FastAPI (`8000`) e Next.js (`3000`).  
-Para o frontend consumir a API local: `NEXT_PUBLIC_USE_API=true`.
+Abra http://localhost:3000
 
-### Opção 3 — Backend FastAPI manual (`apps/api`)
-```bash
-cd apps/api
-python -m venv .venv
-.venv\Scripts\activate            # Windows
-source .venv/bin/activate          # Linux/macOS
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-*API em [http://127.0.0.1:8000](http://127.0.0.1:8000). Docs em `/docs`.*
+Copie .env.example se precisar de NEXT_PUBLIC_API_URL.
+
 
 ---
 
-## 🧪 Scripts e Testes / Scripts and Testing
+## Technical decisions / Decisões técnicas
 
-### Backend
-```bash
-cd apps/api
-.venv\Scripts\python -m pytest
-```
-
-### Frontend
-```bash
-cd apps/web
-npm run lint
-npm run typecheck
-npm run build
-```
+- **Checks explícitos** (qualidade/frescor/drift) em vez de só dashboards.
+- **Tailwind** para UI de torre de controle.
+- **Seeds** para demo sem warehouse real.
 
 ---
 
-## 📊 Metodologia de Confiabilidade / Reliability Methodology
+## Roadmap
 
-* **Schema check:** valida colunas esperadas e fingerprint.
-* **Freshness SLA:** compara idade do dado com `sla_hours` da fonte.
-* **Null / duplicate rates:** limiares configuráveis no engine.
-* **Volume drift:** variação percentual vs execução anterior.
-* **Score explicável:** parte de 100 e aplica penalidades por severidade (critical −25, high −15, medium −8, low −3).
+### Implementado
+- Painéis, drift, SLA/incidentes, demo Vercel
 
-Detalhes em [docs/quality_methodology.md](./docs/quality_methodology.md).
-
----
-
-## 🛡️ Segurança e Boas Práticas
-
-* Seeds sintéticos sem PII real (e-mails de exemplo).
-* `.env` ignorado; apenas `.env.example` versionado.
-* Escopo MVP limitado a 3 conectores demo para evitar plataforma inchada.
-* UI possui fallback snapshot se a API estiver offline.
+### Planejado
+- Alertas externos
+- Mais conectores
+- Histórico longo de incidentes
 
 ---
 
-## 🧭 Roadmap do Produto
+<a id="autor--author"></a>
 
-* **MVP:** 3 conectores demo, checks, score, incidentes, dashboard, briefing.
-* **Fase 2:** models dbt-like, Slack/email, comparação de releases, data contracts, lineage básico.
-* **Fase 3:** orquestração real, incident playbooks, multi-workspace, anomaly detection robusta, catálogo de métricas.
+## Autor / Author
 
----
+Developed by **Felipe Alirio Baruja**.
 
-## 💼 Valor para Portfólio / Portfolio Value
-
-Demonstra competências de **Analytics Engineering, Data Observability e Data Product**:
-- design de produto de confiabilidade;
-- pipeline de qualidade temporal;
-- incident response com ação recomendada;
-- arquitetura full-stack Next.js + FastAPI;
-- narrativa executiva de risco de dados.
-
-Roteiro de entrevista: [docs/portfolio_case.md](./docs/portfolio_case.md).
+- **Portfolio:** [https://barujafe.vercel.app/](https://barujafe.vercel.app/)
+- **GitHub:** [github.com/BarujaFe1](https://github.com/BarujaFe1)
+- **LinkedIn:** [linkedin.com/in/barujafe](https://www.linkedin.com/in/barujafe/)
+- **Repository:** [github.com/BarujaFe1/dataops-control-tower](https://github.com/BarujaFe1/dataops-control-tower)
 
 ---
 
-## 📚 Documentação Complementar
+## License / Licença
 
-- [docs/portfolio_case.md](./docs/portfolio_case.md) — posicionamento e talking points
-- [docs/quality_methodology.md](./docs/quality_methodology.md) — checks, limiares e score
+MIT License.
 
----
-
-## 🖼️ GitHub Social Preview
-
-```txt
-assets/social-preview.png
-```
-*Dimensão recomendada: 1280x640. Upload em: Repository Settings → Social Preview.*
+See [LICENSE](./LICENSE) for details.
 
 ---
 
-## 🔖 GitHub Repository Metadata
-
-### About sugerido
-```txt
-Data reliability control tower for recurring datasets — quality, freshness, schema drift, SLA and incidents.
-```
-
-### Topics sugeridos
-```txt
-data-observability
-data-quality
-analytics-engineering
-dataops
-fastapi
-nextjs
-typescript
-python
-pandas
-sla-monitoring
-incident-response
-portfolio-project
-schema-drift
-reliability
-```
-
----
-
-## 👤 Autor / Author
-
-Desenvolvido por **Felipe Alirio Baruja**.
-
-- **Portfolio:** [barujafe.vercel.app](https://barujafe.vercel.app/)
-- **GitHub:** [@BarujaFe1](https://github.com/BarujaFe1)
-- **LinkedIn:** [Gustavo Felipe Alirio Baruja](https://www.linkedin.com/in/barujafe/)
-
----
-
-## 📄 Licença / License
-
-MIT License. Copyright (c) 2026 Felipe Alirio Baruja.
+<div align="center">
+  <p><strong>DataOps Control Tower</strong></p>
+  <p>Confiabilidade de dados visível antes do incidente.</p>
+  <p><em>Data reliability visible before the incident.</em></p>
+</div>
